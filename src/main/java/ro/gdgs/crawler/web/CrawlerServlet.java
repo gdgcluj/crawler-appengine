@@ -1,6 +1,8 @@
 package ro.gdgs.crawler.web;
 
 import com.google.appengine.api.urlfetch.*;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,10 +27,21 @@ public class CrawlerServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         try {
-            String url = request.getParameter("url");
-            URI uri = URI.create(url);
-            String result = downloadPage(uri);
-            out.print(result);
+            UserService userService = UserServiceFactory.getUserService();
+            if (userService.isUserLoggedIn()) {
+                String url = request.getParameter("url");
+                URI uri = URI.create(url);
+                String result = downloadPage(uri);
+
+                out.print(result);
+            } else {
+                StringBuffer currentUrl = request.getRequestURL();
+                currentUrl.append("?");
+                currentUrl.append(request.getQueryString());
+                String loginUrl = userService.createLoginURL(currentUrl.toString());
+                response.sendRedirect(loginUrl);
+            }
+
         } finally {
             out.close();
         }
@@ -38,7 +51,7 @@ public class CrawlerServlet extends HttpServlet {
         StringBuilder page = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
-                uri.toURL().openStream(), Charset.forName("UTF-8")))) {
+                        uri.toURL().openStream(), Charset.forName("UTF-8")))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 page.append(line);
