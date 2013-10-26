@@ -6,7 +6,7 @@
     <meta name="description" content="Pagina principala pentru proiectul crawler-appengine." />
     <meta name="author" content="Octavian" />
 
-    <title>Greeting</title>
+    <title>Crawling</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/css/bootstrap.css" />
@@ -20,14 +20,14 @@
 </head>
 
 <body>
-<form role="form" class="formPosition" action="/greet" method="get">
+<form role="form" class="formPosition" action="/crawl" method="get">
     <fieldset>
-        <legend>Greeting</legend>
+        <legend>Crawling</legend>
 
         <div class="form-group">
-            <label for="username">Nume utilizator</label>
-            <input id="username" name="username" type="text" class="form-control" placeholder="" required="">
-            <span class="help-block">...</span>
+            <label for="url">URL</label>
+            <input id="url" name="url" type="text" class="form-control" placeholder="" required="">
+            <span class="help-block">link-ul la pagina pe care vrei sa o descarci</span>
         </div>
 
         <div class="form-group">

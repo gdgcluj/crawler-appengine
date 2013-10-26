@@ -14,6 +14,15 @@
         <url-pattern>/greet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>crawl</servlet-name>
+        <servlet-class>ro.gdgs.crawler.web.CrawlerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>crawl</servlet-name>
+        <url-pattern>/crawl</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
