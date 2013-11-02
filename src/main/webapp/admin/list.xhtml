@@ -1,56 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 <ui:composition template="/template.xhtml">
-    <ui:define name="title">Pagini</ui:define>
+    <ui:define name="title">Pagini descarcate</ui:define>
     <ui:define name="body">
         <h:panelGroup id="messagePanel" layout="block">
             <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
         </h:panelGroup>
 
-        <h:form rendered="#{!paginaInformatiiAdmin.utilizatori.isEmpty()}" styleClass="center">
+        <h:form styleClass="center">
             <div align="center">
-                <h:commandButton action="#{paginaInformatiiAdmin.adauga()}" value="Adauga utilizator nou" styleClass="gwt-Button" />
-                <br />
-                <h:dataTable value="#{paginaInformatiiAdmin.utilizatori}" var="item"
-                             columnClasses="gwt-Label">
+                 <h:dataTable value="#{crawlerService.pages}" var="item">
                     <h:column>
-                        <f:facet name="header">Nume</f:facet>
-                        <h:outputText value="#{item.nume}"/>
+                        <f:facet name="header">ID</f:facet>
+                        <h:outputText value="#{item.id}"/>
                     </h:column>
 
                     <h:column>
-                        <f:facet name="header">Zi de nastere</f:facet>
-                        <h:outputText value="#{item.ziDeNastere}">
-                            <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
-                        </h:outputText>
+                        <f:facet name="header">Titlu</f:facet>
+                        <h:outputText value="#{item.title}" />
                     </h:column>
 
                     <h:column>
-                        <f:facet name="header">Adresa</f:facet>
-                        <h:outputText value="#{item.adresa}"/>
+                        <f:facet name="header">Descriere</f:facet>
+                        <h:outputText value="#{item.description}"/>
                     </h:column>
 
                     <h:column>
-                        <f:facet name="header">Latitudine</f:facet>
-                        <h:outputText value="#{item.latitudine}"/>
+                        <f:facet name="header">URL</f:facet>
+                        <h:outputText value="#{item.url}"/>
                     </h:column>
 
                     <h:column>
-                        <f:facet name="header">Longitudine</f:facet>
-                        <h:outputText value="#{item.longitudine}"/>
+                        <f:facet name="header">Crawled</f:facet>
+                        <h:outputText value="#{item.crawled}"/>
                     </h:column>
-
-                    <h:column>
-                        <h:commandLink action="#{paginaInformatiiAdmin.modifica(item)}" value="Modifica" styleClass="gwt-Hyperlink"/>
-                    </h:column>
-
-                    <h:column>
-                        <h:commandLink action="#{paginaInformatiiAdmin.sterge(item)}" value="Sterge" styleClass="gwt-Hyperlink"/>
-                    </h:column>
-
                 </h:dataTable>
             </div>
         </h:form>

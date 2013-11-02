@@ -4,6 +4,7 @@ import com.google.appengine.api.datastore.*;
 import ro.gdgs.crawler.db.Specification;
 import ro.gdgs.crawler.domain.Page;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class GaePageRepository implements JpaRepository {
             Key key = KeyFactory.createKey("pages", page.getId());
             entity = datastore.get(key);
         } catch (Exception e) {
-            entity = new Entity("pages", "id");
+            entity = new Entity("pages");
         }
         entity.setProperty("url", page.getUrl());
         entity.setProperty("title", page.getTitle());
@@ -41,7 +42,22 @@ public class GaePageRepository implements JpaRepository {
 
     @Override
     public List<Page> findAll() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        // Use class Query to assemble a query
+        Query q = new Query("pages");
+        // Use PreparedQuery interface to retrieve results
+        PreparedQuery pq = datastore.prepare(q);
+        List<Entity> list = pq.asList(FetchOptions.Builder.withDefaults());
+        List<Page> result = new ArrayList<>();
+        for (Entity entity : list) {
+            Page page = new Page();
+            page.setId(entity.getKey().getId());
+            page.setTitle(entity.getProperty("title").toString());
+            page.setDescription(entity.getProperty("description").toString());
+            page.setUrl(entity.getProperty("url").toString());
+            page.setCrawled((boolean) entity.getProperty("crawled"));
+            result.add(page);
+        }
+        return result;
     }
 
     @Override

@@ -11,14 +11,16 @@ import ro.gdgs.crawler.repositories.GaePageRepository;
 import ro.gdgs.crawler.repositories.JpaRepository;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  * @author hasna
- * @since 1.0.128-SNAPSHOT
+ * @since 1.1
  */
-public class CrawlerService {
+public class CrawlerService implements Serializable {
     private JpaRepository pageRepository;
     private URLFetchService service;
 
@@ -55,7 +57,11 @@ public class CrawlerService {
 
     }
 
-    public void closeRepository(){
+    public List<Page> getPages() {
+        return pageRepository.findAll();
+    }
+
+    public void closeRepository() {
         pageRepository.close();
     }
 

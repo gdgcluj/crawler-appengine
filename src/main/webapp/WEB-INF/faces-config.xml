@@ -9,4 +9,10 @@
         <managed-bean-class>ro.gdgs.crawler.services.AuthenticationService</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>crawlerService</managed-bean-name>
+        <managed-bean-class>ro.gdgs.crawler.services.CrawlerService</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
