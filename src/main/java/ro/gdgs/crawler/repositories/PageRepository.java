@@ -14,13 +14,14 @@ import java.util.List;
  * @author hasna
  * @since 1.1
  */
-public class PageRepository {
+public class PageRepository implements JpaRepository {
     private EntityManager entityManager;
 
     public PageRepository() {
         this.entityManager = EMFService.get().createEntityManager();
     }
 
+    @Override
     public void save(Page entity) {
         try {
             entityManager.getTransaction().begin();
@@ -32,6 +33,7 @@ public class PageRepository {
         }
     }
 
+    @Override
     public List<Page> findAll(Specification<Page> specification) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Page> q = cb.createQuery(Page.class);
@@ -42,6 +44,7 @@ public class PageRepository {
         return entityManager.createQuery(q).getResultList();
     }
 
+    @Override
     public List<Page> findAll() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Page> q = cb.createQuery(Page.class);
@@ -51,10 +54,12 @@ public class PageRepository {
         return entityManager.createQuery(q).getResultList();
     }
 
+    @Override
     public void flush() {
         entityManager.flush();
     }
 
+    @Override
     public void close() {
         entityManager.close();
     }

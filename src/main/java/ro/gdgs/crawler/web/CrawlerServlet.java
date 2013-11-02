@@ -1,8 +1,7 @@
 package ro.gdgs.crawler.web;
 
 import com.google.appengine.api.urlfetch.*;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
+import ro.gdgs.crawler.services.CrawlerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,27 +21,22 @@ import java.nio.charset.Charset;
 public class CrawlerServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
+        response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
+        CrawlerService service = null;
         try {
-            UserService userService = UserServiceFactory.getUserService();
-            if (userService.isUserLoggedIn()) {
-                String url = request.getParameter("url");
-                URI uri = URI.create(url);
-                String result = downloadPage(uri);
-
-                out.print(result);
-            } else {
-                StringBuffer currentUrl = request.getRequestURL();
-                currentUrl.append("?");
-                currentUrl.append(request.getQueryString());
-                String loginUrl = userService.createLoginURL(currentUrl.toString());
-                response.sendRedirect(loginUrl);
-            }
-
+            service = new CrawlerService();
+            String url = request.getParameter("url");
+            URI uri = URI.create(url);
+            String html = service.downloadPage(uri);
+            service.savePage(url, html);
+            out.write("Am salvat cu succes pagina.");
         } finally {
+            if (service != null) {
+                service.closeRepository();
+            }
             out.close();
         }
     }
