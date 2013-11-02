@@ -2,7 +2,10 @@
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
     <application>crawler-gdg-1</application>
     <version>${appengine.app.version}</version>
+    <!-- http://java.wildstartech.com/Java-Platform-Enterprise-Edition/JavaServer-Faces/javaserver-faces-22/configuring-jsf-22-to-run-on-the-google-app-engine-using-eclipse -->
     <threadsafe>true</threadsafe>
+    <sessions-enabled>true</sessions-enabled>
+    <async-session-persistence enabled="false" />
 
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>

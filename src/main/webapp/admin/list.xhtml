@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="/template.xhtml">
+    <ui:define name="title">Pagini</ui:define>
+    <ui:define name="body">
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+        </h:panelGroup>
+
+        <h:form rendered="#{!paginaInformatiiAdmin.utilizatori.isEmpty()}" styleClass="center">
+            <div align="center">
+                <h:commandButton action="#{paginaInformatiiAdmin.adauga()}" value="Adauga utilizator nou" styleClass="gwt-Button" />
+                <br />
+                <h:dataTable value="#{paginaInformatiiAdmin.utilizatori}" var="item"
+                             columnClasses="gwt-Label">
+                    <h:column>
+                        <f:facet name="header">Nume</f:facet>
+                        <h:outputText value="#{item.nume}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Zi de nastere</f:facet>
+                        <h:outputText value="#{item.ziDeNastere}">
+                            <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
+                        </h:outputText>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Adresa</f:facet>
+                        <h:outputText value="#{item.adresa}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Latitudine</f:facet>
+                        <h:outputText value="#{item.latitudine}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Longitudine</f:facet>
+                        <h:outputText value="#{item.longitudine}"/>
+                    </h:column>
+
+                    <h:column>
+                        <h:commandLink action="#{paginaInformatiiAdmin.modifica(item)}" value="Modifica" styleClass="gwt-Hyperlink"/>
+                    </h:column>
+
+                    <h:column>
+                        <h:commandLink action="#{paginaInformatiiAdmin.sterge(item)}" value="Sterge" styleClass="gwt-Hyperlink"/>
+                    </h:column>
+
+                </h:dataTable>
+            </div>
+        </h:form>
+        <h:form>
+            <h:outputLink value="/admin/index.jsf">
+                Inapoi
+            </h:outputLink>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

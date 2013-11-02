@@ -1,0 +1,16 @@
+<queue-entries>
+    <!--<queue>-->
+        <!--<name>crawler-queue</name>-->
+        <!--<rate>20/h</rate>-->
+        <!--&lt;!&ndash;<bucket-size>40</bucket-size>&ndash;&gt;-->
+        <!--&lt;!&ndash; se reincearca un task de maxim 5 ori dupa 10s, 20s, 40s, 80s si 160s &ndash;&gt;-->
+        <!--<max-concurrent-requests>1</max-concurrent-requests>-->
+        <!--<retry-parameters>-->
+            <!--<task-retry-limit>5</task-retry-limit>-->
+            <!--&lt;!&ndash;<task-age-limit>2h</task-age-limit>&ndash;&gt;-->
+            <!--<min-backoff-seconds>10</min-backoff-seconds>-->
+            <!--<max-backoff-seconds>160</max-backoff-seconds>-->
+            <!--<max-doublings>2</max-doublings>&lt;!&ndash; timeout=min-backoff-seconds*2^(max-doublings-1) &ndash;&gt;-->
+        <!--</retry-parameters>-->
+    <!--</queue>-->
+</queue-entries>

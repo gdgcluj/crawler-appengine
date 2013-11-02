@@ -5,6 +5,28 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.enableMultiThreadedStartup</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>facelets.DEVELOPMENT</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <!-- Use Documents Saved as *.xhtml -->
+    <context-param>
+        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.xhtml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>greet</servlet-name>
         <servlet-class>ro.gdgs.crawler.web.GreetServlet</servlet-class>
@@ -20,10 +42,62 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>crawl</servlet-name>
-        <url-pattern>/crawl</url-pattern>
+        <url-pattern>/admin/crawl</url-pattern>
     </servlet-mapping>
 
+    <!-- Faces Servlet -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!-- Faces Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+
+    <security-constraint>
+        <display-name>Restrict direct access to XHTML files</display-name>
+        <web-resource-collection>
+            <web-resource-name>XHTML files</web-resource-name>
+            <url-pattern>*.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
+
+    <!-- Check authentication -->
+    <filter>
+        <description>Requires user to log in as a member</description>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>ro.gdgs.crawler.web.filters.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <!-- AppEngine Bug 8145 Work Around -->
+        <description>Suppresses the If Modified Since header until GAE bug 8145 is fixed.</description>
+        <filter-name>GAEBug8145WorkAround</filter-name>
+        <filter-class>ro.gdgs.crawler.web.filters.HttpIfModifiedSinceFix</filter-class>
+    </filter>
+
+
+    <filter-mapping>
+        <filter-name>GAEBug8145WorkAround</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- Welcome page -->
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsf</welcome-file>
     </welcome-file-list>
+
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
 </web-app>

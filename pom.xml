@@ -6,7 +6,7 @@
 
     <groupId>ro.gdgs.crawler</groupId>
     <artifactId>crawler-appengine</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1</version>
     <packaging>war</packaging>
 
     <licenses>
@@ -22,19 +22,36 @@
         <url>http://sites.google.com/site/gdgcluj</url>
     </organization>
 
+    <properties>
+        <appengine.app.version>1</appengine.app.version>
+        <appengine.target.version>1.8.5</appengine.target.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>google-releases</id>
+            <name>Google Releases</name>
+            <url>https://oss.sonatype.org/content/repositories/google-releases</url>
+        </repository>
+        <repository>
+            <id>DataNucleus_Repos2</id>
+            <name>DataNucleus Repository</name>
+            <url>http://www.datanucleus.org/downloads/maven2</url>
+        </repository>
+    </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>google-staging</id>
             <name>Google Staging</name>
             <url>https://oss.sonatype.org/content/repositories/comgoogleappengine-1004/</url>
         </pluginRepository>
+        <pluginRepository>
+            <id>DataNucleus_2</id>
+            <url>http://www.datanucleus.org/downloads/maven2/</url>
+        </pluginRepository>
     </pluginRepositories>
-
-    <properties>
-        <appengine.app.version>1</appengine.app.version>
-        <appengine.target.version>1.8.5</appengine.target.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
         <!-- Google AppEngine -->
@@ -51,11 +68,75 @@
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
+        <!-- JSF -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+        <!-- JSF Expression Language -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!-- Datanucleus JPA -->
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-core</artifactId>
+            <version>3.1.5</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-api-jpa</artifactId>
+            <version>3.1.4</version>
+            <!--<scope>runtime</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-rdbms</artifactId>
+            <version>3.1.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.appengine.orm</groupId>
+            <artifactId>datanucleus-appengine</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.jdo</groupId>
+            <artifactId>jdo-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jpa_2.0_spec</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+        </dependency>
+        <!-- use by javax validation -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.0.1.Final</version>
+        </dependency>
+
+        <!-- jsoup HTML parser library @ http://jsoup.org/ -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.7.2</version>
         </dependency>
 
         <!-- Test Dependencies -->
@@ -87,6 +168,34 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.datanucleus</groupId>
+                <artifactId>datanucleus-maven-plugin</artifactId>
+                <version>3.3.0-release</version>
+                <configuration>
+                    <api>JPA</api>
+                    <!-- <persistenceUnitName>transactions-optional</persistenceUnitName> -->
+                    <!-- <log4jConfiguration>${basedir}/log4j.properties</log4jConfiguration> -->
+                    <verbose>true</verbose>
+                    <fork>false</fork>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>enhance</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.datanucleus</groupId>
+                        <artifactId>datanucleus-core</artifactId>
+                        <version>3.1.5</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <version>3.1</version>

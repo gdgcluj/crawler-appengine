@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="/template.xhtml">
+    <ui:define name="title">Administrare crawler</ui:define>
+
+    <ui:define name="body">
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+        </h:panelGroup>
+
+        <form role="form" class="formPosition" action="/admin/crawl" method="get">
+            <fieldset>
+                <legend>Crawling</legend>
+
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input id="url" name="url" type="text" class="form-control" placeholder="" required=""/>
+                    <span class="help-block">link-ul la pagina pe care vrei sa o descarci</span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Trimite"/>
+                    <input type="reset" class="btn btn-default" value="Cancel"/>
+                </div>
+            </fieldset>
+        </form>
+    </ui:define>
+</ui:composition>
+</html>
