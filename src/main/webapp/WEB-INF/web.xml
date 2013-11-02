@@ -37,6 +37,24 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>init</servlet-name>
+        <servlet-class>ro.gdgs.crawler.web.InitServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>init</servlet-name>
+        <url-pattern>/init</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>crawl-task</servlet-name>
+        <servlet-class>ro.gdgs.crawler.web.TaskServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>crawl-task</servlet-name>
+        <url-pattern>/crawl-task</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>crawl</servlet-name>
         <servlet-class>ro.gdgs.crawler.web.CrawlerServlet</servlet-class>
     </servlet>

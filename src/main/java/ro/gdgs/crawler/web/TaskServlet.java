@@ -12,9 +12,9 @@ import java.net.URI;
 
 /**
  * @author Octavian
- * @since 1.0
+ * @since 1.1
  */
-public class CrawlerServlet extends HttpServlet {
+public class TaskServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
@@ -24,11 +24,14 @@ public class CrawlerServlet extends HttpServlet {
         CrawlerService service = null;
         try {
             service = new CrawlerService();
+            String id = request.getParameter("id");
             String url = request.getParameter("url");
             URI uri = URI.create(url);
             String html = service.downloadPage(uri);
-            service.savePage(url, html);
+            service.updatePage(id, html);
             out.write("Am salvat cu succes pagina.");
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
         } finally {
             if (service != null) {
                 service.closeRepository();

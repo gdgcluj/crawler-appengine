@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
-    <!--<cron>-->
-        <!--<url></url>-->
-        <!--<description></description>-->
-        <!--<schedule>every day 00:10</schedule>-->
-        <!--&lt;!&ndash;<timezone>Europe/Bucharest</timezone>&ndash;&gt;-->
-    <!--</cron>-->
+    <cron>
+        <url>/init</url>
+        <description>bla bla</description>
+        <schedule>every day 00:10</schedule>
+        <!--<timezone>Europe/Bucharest</timezone>-->
+    </cron>
 </cronentries>
