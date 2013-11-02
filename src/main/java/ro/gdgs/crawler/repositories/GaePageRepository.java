@@ -1,8 +1,6 @@
 package ro.gdgs.crawler.repositories;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.*;
 import ro.gdgs.crawler.db.Specification;
 import ro.gdgs.crawler.domain.Page;
 
@@ -14,20 +12,26 @@ import java.util.List;
  */
 public class GaePageRepository implements JpaRepository {
     DatastoreService datastore;
+
     public GaePageRepository() {
         datastore = DatastoreServiceFactory.getDatastoreService();
     }
 
     @Override
     public void save(Page page) {
-        Entity employee = new Entity("Page");
+        Entity entity;
+        try {
+            Key key = KeyFactory.createKey("pages", page.getId());
+            entity = datastore.get(key);
+        } catch (Exception e) {
+            entity = new Entity("pages", "id");
+        }
+        entity.setProperty("url", page.getUrl());
+        entity.setProperty("title", page.getTitle());
+        entity.setProperty("description", page.getDescription());
+        entity.setProperty("crawled", page.isCrawled());
 
-        employee.setProperty("url", page.getUrl());
-        employee.setProperty("title", page.getTitle());
-        employee.setProperty("description", page.getDescription());
-        employee.setProperty("title", page.getTitle());
-
-
+        datastore.put(entity);
     }
 
     @Override

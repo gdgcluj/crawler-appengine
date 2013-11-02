@@ -7,8 +7,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import ro.gdgs.crawler.domain.Page;
+import ro.gdgs.crawler.repositories.GaePageRepository;
 import ro.gdgs.crawler.repositories.JpaRepository;
-import ro.gdgs.crawler.repositories.PageRepository;
 
 import java.io.IOException;
 import java.net.URI;
@@ -23,7 +23,7 @@ public class CrawlerService {
     private URLFetchService service;
 
     public CrawlerService() {
-        pageRepository = new PageRepository();
+        pageRepository = new GaePageRepository();
         service = URLFetchServiceFactory.getURLFetchService();
         DatastoreService datastore = DatastoreServiceFactory
                 .getDatastoreService();
@@ -49,6 +49,8 @@ public class CrawlerService {
         page.setDescription(description);
         page.setCrawled(true);
         page.setUrl(url);
+        //pentru testarea update-ului, iei id-ul din Datastore View coloana ID
+//        page.setId(5629499534213120L);
         pageRepository.save(page);
 
     }
