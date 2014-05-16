@@ -23,7 +23,7 @@ public class AuthenticationService implements Serializable {
     }
 
     public String getName() {
-        return "asd";
+        return userService.getCurrentUser().getNickname();
     }
 
     public boolean isLoggedIn() {
@@ -31,8 +31,7 @@ public class AuthenticationService implements Serializable {
     }
 
     public void login() {
-        Map<String, String> params =
-                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         login(params.get("url"));
     }
 
@@ -50,8 +49,6 @@ public class AuthenticationService implements Serializable {
     }
 
     public void logout() {
-        Map<String, String> params =
-                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         logout("/");
     }
 

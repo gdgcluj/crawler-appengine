@@ -10,20 +10,20 @@ import java.util.logging.Logger;
 
 /**
  * Wraps the ServletRequest to remove the "If-Modified-Since" http header
- * @author Derek Berube, WildstarTechnologies, LLC.
  *
+ * @author Derek Berube, WildstarTechnologies, LLC.
  */
 public class HttpModifiedSinceRequestWrapper extends HttpServletRequestWrapper {
-    private static final String _CLASS =
-            HttpModifiedSinceRequestWrapper.class.getName();
+    private static final String _CLASS = HttpModifiedSinceRequestWrapper.class.getName();
     private static final Logger logger = Logger.getLogger(_CLASS);
+
     /**
      * @param request
      */
     public HttpModifiedSinceRequestWrapper(HttpServletRequest request) {
         super(request);
-        logger.entering(_CLASS,"HttpModifiedSinceRequestWrapper");
-        logger.exiting(_CLASS,"HttpModifiedSinceRequestWrapper");
+        logger.entering(_CLASS, "HttpModifiedSinceRequestWrapper");
+        logger.exiting(_CLASS, "HttpModifiedSinceRequestWrapper");
     }
 
     @Override
@@ -31,12 +31,12 @@ public class HttpModifiedSinceRequestWrapper extends HttpServletRequestWrapper {
      * Returns the header provided it is not the "If-Modified-Since" header.
      */
     public String getHeader(String name) {
-        logger.entering(_CLASS,"getHeader(String)",name);
-        String header=null;
+        logger.entering(_CLASS, "getHeader(String)", name);
+        String header = null;
         if (!"If-Modified-Since".equals(name)) {
-            header=super.getHeader(name);
+            header = super.getHeader(name);
         } // END if (!"If-Modified-Since".equals(name))
-        logger.exiting(_CLASS,"getHeader(String)",header);
+        logger.exiting(_CLASS, "getHeader(String)", header);
         return header;
     }
 
@@ -47,14 +47,11 @@ public class HttpModifiedSinceRequestWrapper extends HttpServletRequestWrapper {
      * present.
      */
     public Enumeration getHeaderNames() {
-        logger.entering(_CLASS,"getHeaderNames()");
-        Enumeration headerNames=null;
-        Enumeration<?> enu=null;
-        List<String> names;
-        String name=null;
+        logger.entering(_CLASS, "getHeaderNames()");
+        String name;
 
-        names=new ArrayList<String>();
-        enu=super.getHeaderNames();
+        List<String> names = new ArrayList<>();
+        Enumeration<?> enu = super.getHeaderNames();
 
         while (enu.hasMoreElements()) {
             name = enu.nextElement().toString();
@@ -62,8 +59,8 @@ public class HttpModifiedSinceRequestWrapper extends HttpServletRequestWrapper {
                 names.add(name);
             } // END if (!"If-Modified-Since".equals(name))
         } // END while (enu.hasMoreElements())
-        headerNames=Collections.enumeration(names);
-        logger.exiting(_CLASS,"getHeaderNames()",headerNames);
+        Enumeration headerNames = Collections.enumeration(names);
+        logger.exiting(_CLASS, "getHeaderNames()", headerNames);
         return headerNames;
     }
 }

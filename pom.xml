@@ -6,7 +6,7 @@
 
     <groupId>ro.gdgs.crawler</groupId>
     <artifactId>crawler-appengine</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>war</packaging>
 
     <licenses>
@@ -23,8 +23,8 @@
     </organization>
 
     <properties>
-        <appengine.app.version>1</appengine.app.version>
-        <appengine.target.version>1.8.5</appengine.target.version>
+        <appengine.app.version>2</appengine.app.version>
+        <appengine.target.version>1.9.4</appengine.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -72,7 +72,7 @@
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.faces</artifactId>
-            <version>2.2.4</version>
+            <version>2.2.6</version>
         </dependency>
         <!-- JSF Expression Language -->
         <dependency>
@@ -129,14 +129,14 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.0.1.Final</version>
+            <version>5.1.1.Final</version>
         </dependency>
 
         <!-- jsoup HTML parser library @ http://jsoup.org/ -->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.7.2</version>
+            <version>1.7.3</version>
         </dependency>
 
         <!-- Test Dependencies -->
@@ -149,7 +149,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <version>1.9.0</version>
+            <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -209,7 +209,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
+                <version>2.4</version>
                 <configuration>
                     <archiveClasses>true</archiveClasses>
                     <webResources>

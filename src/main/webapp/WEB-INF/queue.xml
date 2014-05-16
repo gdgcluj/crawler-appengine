@@ -10,7 +10,8 @@
             <!--<task-age-limit>2h</task-age-limit>-->
             <min-backoff-seconds>10</min-backoff-seconds>
             <max-backoff-seconds>160</max-backoff-seconds>
-            <max-doublings>2</max-doublings><!-- timeout=min-backoff-seconds*2^(max-doublings-1) -->
+            <max-doublings>2</max-doublings>
+            <!-- timeout=min-backoff-seconds*2^(max-doublings-1) -->
         </retry-parameters>
     </queue>
 </queue-entries>

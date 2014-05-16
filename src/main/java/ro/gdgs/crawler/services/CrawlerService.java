@@ -1,7 +1,5 @@
 package ro.gdgs.crawler.services;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.urlfetch.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,23 +27,16 @@ public class CrawlerService implements Serializable {
     public CrawlerService() {
         pageRepository = new GaePageRepository();
         service = URLFetchServiceFactory.getURLFetchService();
-        DatastoreService datastore = DatastoreServiceFactory
-                .getDatastoreService();
-
     }
 
     public String downloadPage(URI uri) throws IOException {
-        HTTPResponse response = service.fetch(
-                new HTTPRequest(uri.toURL(), HTTPMethod.GET));
-        return new String(response.getContent(),
-                Charset.forName("UTF-8"));
+        HTTPResponse response = service.fetch(new HTTPRequest(uri.toURL(), HTTPMethod.GET));
+        return new String(response.getContent(), Charset.forName("UTF-8"));
     }
 
     private String downloadPageOld(URI uri) throws IOException {
         StringBuilder page = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                        uri.toURL().openStream(), Charset.forName("UTF-8")))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(uri.toURL().openStream(), Charset.forName("UTF-8")))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 page.append(line);
